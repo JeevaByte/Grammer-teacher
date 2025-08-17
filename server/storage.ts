@@ -26,6 +26,8 @@ import bcrypt from "bcryptjs";
 import { drizzle } from "drizzle-orm/neon-http";
 import { neon } from "@neondatabase/serverless";
 import { eq } from "drizzle-orm";
+import fs from "fs";
+import path from "path";
 
 export interface IStorage {
   // User operations
@@ -310,4 +312,327 @@ export class MemStorage implements IStorage {
   }
 }
 
-export const storage = new MemStorage();
+// PostgreSQL Storage implementation
+export class PostgreSQLStorage implements IStorage {
+  private db;
+
+  constructor() {
+    if (!process.env.DATABASE_URL) {
+      throw new Error("DATABASE_URL environment variable is required");
+    }
+    
+    console.log("DATABASE_URL format:", process.env.DATABASE_URL?.substring(0, 20) + "...");
+    
+    try {
+      let connectionString = process.env.DATABASE_URL;
+      
+      // Convert HTTPS URL to PostgreSQL URL format if needed
+      if (connectionString.startsWith('https://')) {
+        console.log("Converting HTTPS URL to PostgreSQL format...");
+        // This is likely a Supabase HTTP URL, we need the PostgreSQL connection string instead
+        throw new Error("Please provide the PostgreSQL connection string from Supabase, not the HTTP URL. Go to your Supabase project settings > Database > Connection string > PostgreSQL");
+      }
+      
+      const sql = neon(connectionString);
+      this.db = drizzle(sql);
+      
+      // Initialize with seed data
+      this.initializeDatabase();
+    } catch (error) {
+      console.error("Database connection error:", error);
+      console.log("DATABASE_URL should be in format: postgresql://user:password@host.tld/dbname");
+      throw error;
+    }
+  }
+
+  private async initializeDatabase() {
+    try {
+      // Run migrations first
+      await this.runMigrations();
+      // Then seed data
+      await this.seedData();
+    } catch (error) {
+      console.error("Database initialization error:", error);
+    }
+  }
+
+  private async runMigrations() {
+    try {
+      // Check if tables exist by trying to select from users table
+      await this.db.select().from(users).limit(1);
+      console.log("Database tables already exist");
+    } catch (error) {
+      console.log("Running database migrations...");
+      try {
+        const migrationPath = path.join(process.cwd(), "migrations", "0000_even_mandarin.sql");
+        const migrationSQL = fs.readFileSync(migrationPath, "utf-8");
+        
+        // Split SQL statements and execute them
+        const statements = migrationSQL
+          .split("--> statement-breakpoint")
+          .map(stmt => stmt.trim())
+          .filter(stmt => stmt.length > 0);
+
+        const sql = neon(process.env.DATABASE_URL!);
+        
+        for (const statement of statements) {
+          if (statement.trim()) {
+            await sql(statement);
+          }
+        }
+        
+        console.log("Database migrations completed successfully");
+      } catch (migrationError) {
+        console.error("Migration failed:", migrationError);
+        throw migrationError;
+      }
+    }
+  }
+
+  private async seedData() {
+    try {
+      // Check if we have any users
+      const existingUsers = await this.db.select().from(users).limit(1);
+      
+      if (existingUsers.length === 0) {
+        // Create default teacher
+        const teacherId = randomUUID();
+        const teacher: InsertUser = {
+          username: "teacher",
+          email: "teacher@grammarmaster.com",
+          password: await bcrypt.hash("password", 10),
+          firstName: "John",
+          lastName: "Smith",
+          role: "teacher",
+          avatar: null,
+        };
+        
+        await this.db.insert(users).values({ ...teacher, id: teacherId });
+
+        // Create sample quizzes
+        const sampleQuizzes = [
+          {
+            id: randomUUID(),
+            title: "Present Tenses",
+            description: "Master the use of simple present, present continuous, and present perfect tenses.",
+            difficulty: "beginner",
+            category: "tenses",
+            timeLimit: 10,
+            questions: [
+              {
+                id: 1,
+                question: "She _______ to work every morning at 8 AM.",
+                options: ["go", "goes", "going", "went"],
+                correctAnswer: 1,
+                explanation: "With third person singular (she/he/it) in simple present, we add 's' to the verb."
+              },
+              {
+                id: 2,
+                question: "They _______ studying English for two years.",
+                options: ["are", "have been", "were", "had been"],
+                correctAnswer: 1,
+                explanation: "Present perfect continuous shows an action that started in the past and continues to the present."
+              }
+            ],
+          },
+          {
+            id: randomUUID(),
+            title: "Conditional Sentences",
+            description: "Learn about zero, first, second, and third conditional structures.",
+            difficulty: "intermediate",
+            category: "conditionals",
+            timeLimit: 15,
+            questions: [
+              {
+                id: 1,
+                question: "If it _______ tomorrow, we will stay inside.",
+                options: ["rain", "rains", "will rain", "rained"],
+                correctAnswer: 1,
+                explanation: "In first conditional, we use simple present in the if-clause and will + infinitive in the main clause."
+              }
+            ],
+          },
+          {
+            id: randomUUID(),
+            title: "Advanced Grammar",
+            description: "Challenge yourself with complex grammatical structures and rules.",
+            difficulty: "advanced",
+            category: "advanced",
+            timeLimit: 20,
+            questions: [
+              {
+                id: 1,
+                question: "_______ the meeting been postponed, we would have had more time to prepare.",
+                options: ["Had", "If", "Should", "Were"],
+                correctAnswer: 0,
+                explanation: "This is an inverted third conditional structure, where 'had' is moved to the beginning instead of using 'if'."
+              }
+            ],
+          }
+        ];
+
+        await this.db.insert(quizzes).values(sampleQuizzes);
+
+        // Create sample resources
+        const sampleResources = [
+          {
+            id: randomUUID(),
+            title: "Complete Tenses Guide",
+            description: "Comprehensive guide covering all English tenses with examples and usage rules.",
+            type: "pdf",
+            category: "grammar-guide",
+            url: "/resources/tenses-guide.pdf",
+            isPremium: false,
+            fileSize: 2048576,
+            duration: null,
+          },
+          {
+            id: randomUUID(),
+            title: "Mastering Conditionals",
+            description: "Step-by-step video explanation of all conditional sentence types with practical examples.",
+            type: "video",
+            category: "video-lesson",
+            url: "/resources/conditionals-video.mp4",
+            isPremium: true,
+            fileSize: 52428800,
+            duration: 2700,
+          },
+          {
+            id: randomUUID(),
+            title: "Article Usage Practice",
+            description: "Practice exercises for mastering the correct usage of articles (a, an, the).",
+            type: "worksheet",
+            category: "practice",
+            url: "/resources/articles-worksheet.pdf",
+            isPremium: false,
+            fileSize: 1048576,
+            duration: null,
+          }
+        ];
+
+        await this.db.insert(resources).values(sampleResources);
+      }
+    } catch (error) {
+      console.error("Error seeding data:", error);
+    }
+  }
+
+  async getUser(id: string): Promise<User | undefined> {
+    const result = await this.db.select().from(users).where(eq(users.id, id)).limit(1);
+    return result[0];
+  }
+
+  async getUserByEmail(email: string): Promise<User | undefined> {
+    const result = await this.db.select().from(users).where(eq(users.email, email)).limit(1);
+    return result[0];
+  }
+
+  async getUserByUsername(username: string): Promise<User | undefined> {
+    const result = await this.db.select().from(users).where(eq(users.username, username)).limit(1);
+    return result[0];
+  }
+
+  async createUser(insertUser: InsertUser): Promise<User> {
+    const id = randomUUID();
+    const hashedPassword = await bcrypt.hash(insertUser.password, 10);
+    const userData = { 
+      ...insertUser, 
+      id, 
+      password: hashedPassword
+    };
+    
+    const result = await this.db.insert(users).values(userData).returning();
+    return result[0];
+  }
+
+  async getQuizzes(): Promise<Quiz[]> {
+    return await this.db.select().from(quizzes);
+  }
+
+  async getQuiz(id: string): Promise<Quiz | undefined> {
+    const result = await this.db.select().from(quizzes).where(eq(quizzes.id, id)).limit(1);
+    return result[0];
+  }
+
+  async createQuiz(insertQuiz: InsertQuiz): Promise<Quiz> {
+    const id = randomUUID();
+    const quizData = { ...insertQuiz, id };
+    const result = await this.db.insert(quizzes).values(quizData).returning();
+    return result[0];
+  }
+
+  async getQuizResults(userId: string): Promise<QuizResult[]> {
+    return await this.db.select().from(quizResults).where(eq(quizResults.userId, userId));
+  }
+
+  async createQuizResult(insertResult: InsertQuizResult): Promise<QuizResult> {
+    const id = randomUUID();
+    const resultData = { ...insertResult, id };
+    const result = await this.db.insert(quizResults).values(resultData).returning();
+    return result[0];
+  }
+
+  async getLessons(userId: string): Promise<Lesson[]> {
+    return await this.db.select().from(lessons).where(eq(lessons.studentId, userId));
+  }
+
+  async createLesson(insertLesson: InsertLesson): Promise<Lesson> {
+    const id = randomUUID();
+    const lessonData = { ...insertLesson, id };
+    const result = await this.db.insert(lessons).values(lessonData).returning();
+    return result[0];
+  }
+
+  async updateLesson(id: string, updates: Partial<Lesson>): Promise<Lesson | undefined> {
+    const result = await this.db.update(lessons).set(updates).where(eq(lessons.id, id)).returning();
+    return result[0];
+  }
+
+  async getResources(): Promise<Resource[]> {
+    return await this.db.select().from(resources);
+  }
+
+  async createResource(insertResource: InsertResource): Promise<Resource> {
+    const id = randomUUID();
+    const resourceData = { ...insertResource, id };
+    const result = await this.db.insert(resources).values(resourceData).returning();
+    return result[0];
+  }
+
+  async getForumPosts(): Promise<ForumPost[]> {
+    return await this.db.select().from(forumPosts);
+  }
+
+  async createForumPost(insertPost: InsertForumPost): Promise<ForumPost> {
+    const id = randomUUID();
+    const postData = { ...insertPost, id, replies: 0 };
+    const result = await this.db.insert(forumPosts).values(postData).returning();
+    return result[0];
+  }
+
+  async createContactMessage(insertMessage: InsertContactMessage): Promise<ContactMessage> {
+    const id = randomUUID();
+    const messageData = { ...insertMessage, id, status: "new" };
+    const result = await this.db.insert(contactMessages).values(messageData).returning();
+    return result[0];
+  }
+}
+
+// Initialize storage with fallback to MemStorage if database connection fails
+function initializeStorage(): IStorage {
+  if (!process.env.DATABASE_URL) {
+    console.log("No DATABASE_URL provided, using in-memory storage");
+    return new MemStorage();
+  }
+  
+  try {
+    console.log("Attempting to connect to PostgreSQL database...");
+    return new PostgreSQLStorage();
+  } catch (error) {
+    console.error("Failed to connect to database, falling back to in-memory storage:", error);
+    console.log("To use PostgreSQL, please provide a valid DATABASE_URL in postgresql:// format");
+    return new MemStorage();
+  }
+}
+
+export const storage = initializeStorage();
