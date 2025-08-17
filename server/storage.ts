@@ -12,10 +12,20 @@ import {
   type ForumPost,
   type InsertForumPost,
   type ContactMessage,
-  type InsertContactMessage
+  type InsertContactMessage,
+  users,
+  quizzes,
+  quizResults,
+  lessons,
+  resources,
+  forumPosts,
+  contactMessages
 } from "@shared/schema";
 import { randomUUID } from "crypto";
 import bcrypt from "bcryptjs";
+import { drizzle } from "drizzle-orm/neon-http";
+import { neon } from "@neondatabase/serverless";
+import { eq } from "drizzle-orm";
 
 export interface IStorage {
   // User operations
