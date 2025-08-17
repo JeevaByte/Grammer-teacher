@@ -1,0 +1,1439 @@
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grammar Master - Professional English Grammar Learning Platform</title>
+    <meta name="description" content="Professional English grammar learning platform with interactive quizzes, personalized lessons, and expert tutoring.">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'sans': ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: {
+                            50: '#eff6ff',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                        },
+                        success: {
+                            50: '#ecfdf5',
+                            500: '#10b981',
+                            600: '#059669',
+                        },
+                        warning: {
+                            50: '#fffbeb',
+                            500: '#f59e0b',
+                            600: '#d97706',
+                        }
+                    }
+                }
+            }
+        };
+    </script>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        .quiz-option:hover { transform: translateY(-1px); }
+        .progress-ring { transition: stroke-dasharray 0.35s; }
+        .fade-in { animation: fadeIn 0.5s ease-in; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .glass-effect { backdrop-filter: blur(10px); background-color: rgba(255, 255, 255, 0.8); }
+    </style>
+</head>
+<body class="bg-gray-50 font-sans antialiased">
+
+<!-- @COMPONENT: Navigation [responsive navbar with auth states] -->
+<nav class="bg-white shadow-sm sticky top-0 z-50 border-b border-gray-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-16">
+            <div class="flex items-center">
+                <div class="flex-shrink-0 flex items-center">
+                    <i class="fas fa-graduation-cap text-primary-600 text-2xl mr-2"></i>
+                    <span class="text-xl font-bold text-gray-900">Grammar Master</span>
+                </div>
+            </div>
+            
+            <div class="hidden md:block">
+                <div class="ml-10 flex items-baseline space-x-4">
+                    <a href="#home" class="text-gray-900 hover:text-primary-600 px-3 py-2 text-sm font-medium transition-colors">Home</a>
+                    <a href="#about" class="text-gray-600 hover:text-primary-600 px-3 py-2 text-sm font-medium transition-colors">About</a>
+                    <a href="#resources" class="text-gray-600 hover:text-primary-600 px-3 py-2 text-sm font-medium transition-colors">Resources</a>
+                    <a href="#contact" class="text-gray-600 hover:text-primary-600 px-3 py-2 text-sm font-medium transition-colors">Contact</a>
+                </div>
+            </div>
+            
+            <div class="flex items-center space-x-4">
+                <!-- Theme Toggle -->
+                <button class="p-2 text-gray-600 hover:text-primary-600 transition-colors" aria-label="Toggle theme">
+                    <i class="fas fa-moon text-lg"></i>
+                </button>
+                
+                <!-- Auth Buttons -->
+                <div class="hidden md:flex items-center space-x-2">
+                    <button class="text-gray-600 hover:text-primary-600 px-4 py-2 text-sm font-medium transition-colors" onclick="showLogin()">Login</button>
+                    <button class="bg-primary-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-primary-700 transition-colors" onclick="showRegister()">Sign Up</button>
+                </div>
+                
+                <!-- Mobile menu button -->
+                <button class="md:hidden p-2 text-gray-600 hover:text-primary-600" onclick="toggleMobileMenu()">
+                    <i class="fas fa-bars text-lg"></i>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Mobile menu -->
+        <div id="mobile-menu" class="md:hidden hidden pb-4">
+            <div class="flex flex-col space-y-2">
+                <a href="#home" class="text-gray-900 block px-3 py-2 text-sm font-medium">Home</a>
+                <a href="#about" class="text-gray-600 block px-3 py-2 text-sm font-medium">About</a>
+                <a href="#resources" class="text-gray-600 block px-3 py-2 text-sm font-medium">Resources</a>
+                <a href="#contact" class="text-gray-600 block px-3 py-2 text-sm font-medium">Contact</a>
+                <div class="flex space-x-2 px-3 pt-2">
+                    <button class="text-gray-600 px-4 py-2 text-sm font-medium" onclick="showLogin()">Login</button>
+                    <button class="bg-primary-600 text-white px-4 py-2 rounded-lg text-sm font-medium">Sign Up</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+<!-- @END_COMPONENT: Navigation -->
+
+<!-- @COMPONENT: Hero Section [main landing content] -->
+<section id="home" class="relative bg-gradient-to-br from-primary-50 to-white py-20 lg:py-32">
+    <!-- Professional learning environment with students and teacher -->
+    <div class="absolute inset-0 bg-gradient-to-r from-primary-50/50 to-transparent"></div>
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="lg:grid lg:grid-cols-12 lg:gap-8 items-center">
+            <div class="lg:col-span-6">
+                <h1 class="text-4xl lg:text-6xl font-bold text-gray-900 leading-tight">
+                    Master English Grammar with 
+                    <span class="text-primary-600">Expert Guidance</span>
+                </h1>
+                <p class="mt-6 text-xl text-gray-600 leading-relaxed">
+                    Join thousands of students improving their English grammar through personalized lessons, interactive quizzes, and expert tutoring. Start your journey to perfect grammar today.
+                </p>
+                <div class="mt-8 flex flex-col sm:flex-row gap-4">
+                    <button class="bg-primary-600 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-primary-700 transition-colors shadow-lg" onclick="showRegister()">
+                        Start Learning Free
+                    </button>
+                    <button class="border-2 border-primary-600 text-primary-600 px-8 py-4 rounded-lg text-lg font-semibold hover:bg-primary-50 transition-colors" onclick="showBooking()">
+                        Book a Lesson
+                    </button>
+                </div>
+                <div class="mt-8 flex items-center space-x-6 text-sm text-gray-600">
+                    <div class="flex items-center">
+                        <i class="fas fa-check-circle text-success-500 mr-2"></i>
+                        <span>Free trial available</span>
+                    </div>
+                    <div class="flex items-center">
+                        <i class="fas fa-users text-success-500 mr-2"></i>
+                        <span>10,000+ students</span>
+                    </div>
+                    <div class="flex items-center">
+                        <i class="fas fa-star text-warning-500 mr-2"></i>
+                        <span>4.9/5 rating</span>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-12 lg:mt-0 lg:col-span-6">
+                <!-- Modern classroom with digital learning tools -->
+                <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=600" 
+                     alt="Students learning English grammar in a modern classroom setting" 
+                     class="rounded-2xl shadow-2xl w-full h-auto">
+            </div>
+        </div>
+    </div>
+</section>
+<!-- @END_COMPONENT: Hero Section -->
+
+<!-- @COMPONENT: Services Overview [main service offerings] -->
+<section id="services" class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
+                Comprehensive Grammar Learning Solutions
+            </h2>
+            <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                Choose from our range of learning options designed to fit your schedule, learning style, and goals.
+            </p>
+        </div>
+        
+        <div class="grid md:grid-cols-3 gap-8">
+            <div class="bg-white p-8 rounded-2xl shadow-lg border border-gray-100 hover:shadow-xl transition-shadow">
+                <div class="w-16 h-16 bg-primary-100 rounded-full flex items-center justify-center mb-6">
+                    <i class="fas fa-user-graduate text-primary-600 text-2xl"></i>
+                </div>
+                <h3 class="text-2xl font-bold text-gray-900 mb-4">Private Lessons</h3>
+                <p class="text-gray-600 mb-6 leading-relaxed">
+                    One-on-one personalized grammar coaching tailored to your specific needs and learning pace.
+                </p>
+                <ul class="space-y-3 mb-8">
+                    <li class="flex items-center text-gray-600">
+                        <i class="fas fa-check text-success-500 mr-3"></i>
+                        Customized lesson plans
+                    </li>
+                    <li class="flex items-center text-gray-600">
+                        <i class="fas fa-check text-success-500 mr-3"></i>
+                        Flexible scheduling
+                    </li>
+                    <li class="flex items-center text-gray-600">
+                        <i class="fas fa-check text-success-500 mr-3"></i>
+                        Direct teacher feedback
+                    </li>
+                    <li class="flex items-center text-gray-600">
+                        <i class="fas fa-check text-success-500 mr-3"></i>
+                        Progress tracking
+                    </li>
+                </ul>
+                <button class="w-full bg-primary-600 text-white py-3 rounded-lg font-semibold hover:bg-primary-700 transition-colors" onclick="showBooking()">
+                    Book Now
+                </button>
+            </div>
+            
+            <div class="bg-white p-8 rounded-2xl shadow-lg border border-gray-100 hover:shadow-xl transition-shadow">
+                <div class="w-16 h-16 bg-success-100 rounded-full flex items-center justify-center mb-6">
+                    <i class="fas fa-users text-success-600 text-2xl"></i>
+                </div>
+                <h3 class="text-2xl font-bold text-gray-900 mb-4">Group Classes</h3>
+                <p class="text-gray-600 mb-6 leading-relaxed">
+                    Interactive group sessions where you learn alongside peers and benefit from collaborative learning.
+                </p>
+                <ul class="space-y-3 mb-8">
+                    <li class="flex items-center text-gray-600">
+                        <i class="fas fa-check text-success-500 mr-3"></i>
+                        Small class sizes (max 6)
+                    </li>
+                    <li class="flex items-center text-gray-600">
+                        <i class="fas fa-check text-success-500 mr-3"></i>
+                        Peer interaction
+                    </li>
+                    <li class="flex items-center text-gray-600">
+                        <i class="fas fa-check text-success-500 mr-3"></i>
+                        Cost-effective
+                    </li>
+                    <li class="flex items-center text-gray-600">
+                        <i class="fas fa-check text-success-500 mr-3"></i>
+                        Regular schedule
+                    </li>
+                </ul>
+                <button class="w-full bg-success-600 text-white py-3 rounded-lg font-semibold hover:bg-success-700 transition-colors" onclick="showBooking()">
+                    Join Class
+                </button>
+            </div>
+            
+            <div class="bg-white p-8 rounded-2xl shadow-lg border border-gray-100 hover:shadow-xl transition-shadow">
+                <div class="w-16 h-16 bg-warning-100 rounded-full flex items-center justify-center mb-6">
+                    <i class="fas fa-laptop text-warning-600 text-2xl"></i>
+                </div>
+                <h3 class="text-2xl font-bold text-gray-900 mb-4">Online Tutoring</h3>
+                <p class="text-gray-600 mb-6 leading-relaxed">
+                    Self-paced online learning with interactive quizzes, videos, and comprehensive grammar resources.
+                </p>
+                <ul class="space-y-3 mb-8">
+                    <li class="flex items-center text-gray-600">
+                        <i class="fas fa-check text-success-500 mr-3"></i>
+                        24/7 platform access
+                    </li>
+                    <li class="flex items-center text-gray-600">
+                        <i class="fas fa-check text-success-500 mr-3"></i>
+                        Interactive quizzes
+                    </li>
+                    <li class="flex items-center text-gray-600">
+                        <i class="fas fa-check text-success-500 mr-3"></i>
+                        Video tutorials
+                    </li>
+                    <li class="flex items-center text-gray-600">
+                        <i class="fas fa-check text-success-500 mr-3"></i>
+                        Progress analytics
+                    </li>
+                </ul>
+                <button class="w-full bg-warning-600 text-white py-3 rounded-lg font-semibold hover:bg-warning-700 transition-colors" onclick="showDashboard('student')">
+                    Start Learning
+                </button>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- @END_COMPONENT: Services Overview -->
+
+<!-- @COMPONENT: About Section [teacher information] -->
+<section id="about" class="py-20 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="lg:grid lg:grid-cols-12 lg:gap-12 items-center">
+            <div class="lg:col-span-5 mb-12 lg:mb-0">
+                <!-- Professional teacher portrait in classroom setting -->
+                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&h=800" 
+                     alt="Professional English grammar teacher in classroom" 
+                     class="rounded-2xl shadow-xl w-full h-auto">
+            </div>
+            <div class="lg:col-span-7">
+                <h2 class="text-3xl lg:text-4xl font-bold text-gray-900 mb-6">
+                    Meet Your Grammar Expert
+                </h2>
+                <p class="text-xl text-gray-600 mb-8 leading-relaxed">
+                    With over 15 years of experience teaching English grammar, I'm passionate about helping students master the intricacies of the English language through personalized, engaging instruction.
+                </p>
+                
+                <div class="space-y-6 mb-8">
+                    <div class="flex items-start">
+                        <div class="w-12 h-12 bg-primary-100 rounded-full flex items-center justify-center mr-4 flex-shrink-0">
+                            <i class="fas fa-certificate text-primary-600"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-semibold text-gray-900 mb-2">Expert Qualifications</h3>
+                            <p class="text-gray-600">MA in English Literature, TESOL Certified, Cambridge Assessment Examiner</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-start">
+                        <div class="w-12 h-12 bg-success-100 rounded-full flex items-center justify-center mr-4 flex-shrink-0">
+                            <i class="fas fa-award text-success-600"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-semibold text-gray-900 mb-2">Proven Results</h3>
+                            <p class="text-gray-600">98% student satisfaction rate, 95% pass rate on standardized exams</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-start">
+                        <div class="w-12 h-12 bg-warning-100 rounded-full flex items-center justify-center mr-4 flex-shrink-0">
+                            <i class="fas fa-heart text-warning-600"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-semibold text-gray-900 mb-2">Teaching Philosophy</h3>
+                            <p class="text-gray-600">Making grammar accessible, engaging, and relevant to real-world communication</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="flex flex-wrap gap-4">
+                    <button class="bg-primary-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-primary-700 transition-colors" onclick="showBooking()">
+                        Book a Free Consultation
+                    </button>
+                    <button class="border-2 border-primary-600 text-primary-600 px-6 py-3 rounded-lg font-semibold hover:bg-primary-50 transition-colors" onclick="showContact()">
+                        Get in Touch
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- @END_COMPONENT: About Section -->
+
+<!-- @COMPONENT: Authentication Modal [login/register forms] -->
+<div id="auth-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50 p-4">
+    <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md mx-4 overflow-hidden">
+        <div class="p-8">
+            <div class="flex justify-between items-center mb-6">
+                <h2 id="auth-title" class="text-2xl font-bold text-gray-900">Welcome Back</h2>
+                <button onclick="hideAuth()" class="text-gray-400 hover:text-gray-600 transition-colors">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            
+            <!-- Login Form -->
+            <div id="login-form" class="space-y-6">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
+                    <input type="email" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors" placeholder="your@email.com" data-mock="true">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Password</label>
+                    <input type="password" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors" placeholder="••••••••" data-mock="true">
+                </div>
+                <div class="flex items-center justify-between">
+                    <label class="flex items-center">
+                        <input type="checkbox" class="w-4 h-4 text-primary-600 border-gray-300 rounded focus:ring-primary-500">
+                        <span class="ml-2 text-sm text-gray-600">Remember me</span>
+                    </label>
+                    <a href="#" class="text-sm text-primary-600 hover:text-primary-500">Forgot password?</a>
+                </div>
+                <button class="w-full bg-primary-600 text-white py-3 rounded-lg font-semibold hover:bg-primary-700 transition-colors" onclick="authenticateUser()">
+                    Sign In
+                </button>
+                <div class="text-center">
+                    <span class="text-gray-600">Don't have an account? </span>
+                    <button class="text-primary-600 hover:text-primary-500 font-medium" onclick="switchToRegister()">Sign up</button>
+                </div>
+            </div>
+            
+            <!-- Register Form -->
+            <div id="register-form" class="space-y-6 hidden">
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">First Name</label>
+                        <input type="text" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors" placeholder="John" data-mock="true">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Last Name</label>
+                        <input type="text" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors" placeholder="Doe" data-mock="true">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
+                    <input type="email" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors" placeholder="your@email.com" data-mock="true">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Password</label>
+                    <input type="password" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors" placeholder="••••••••" data-mock="true">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">I am a...</label>
+                    <select class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors">
+                        <option>Student</option>
+                        <option>Teacher</option>
+                    </select>
+                </div>
+                <div class="flex items-center">
+                    <input type="checkbox" class="w-4 h-4 text-primary-600 border-gray-300 rounded focus:ring-primary-500">
+                    <span class="ml-2 text-sm text-gray-600">I agree to the <a href="#" class="text-primary-600 hover:text-primary-500">Terms of Service</a> and <a href="#" class="text-primary-600 hover:text-primary-500">Privacy Policy</a></span>
+                </div>
+                <button class="w-full bg-primary-600 text-white py-3 rounded-lg font-semibold hover:bg-primary-700 transition-colors" onclick="registerUser()">
+                    Create Account
+                </button>
+                <div class="text-center">
+                    <span class="text-gray-600">Already have an account? </span>
+                    <button class="text-primary-600 hover:text-primary-500 font-medium" onclick="switchToLogin()">Sign in</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- @END_COMPONENT: Authentication Modal -->
+
+<!-- @COMPONENT: Student Dashboard [personalized learning interface] -->
+<div id="student-dashboard" class="hidden min-h-screen bg-gray-50">
+    <div class="flex">
+        <!-- Sidebar -->
+        <div class="w-64 bg-white shadow-lg">
+            <div class="p-6 border-b border-gray-200">
+                <div class="flex items-center">
+                    <i class="fas fa-graduation-cap text-primary-600 text-2xl mr-3"></i>
+                    <span class="text-xl font-bold text-gray-900">Grammar Master</span>
+                </div>
+            </div>
+            <nav class="mt-6">
+                <div class="px-4 space-y-2">
+                    <a href="#" class="flex items-center px-4 py-3 text-gray-900 bg-primary-50 border-r-2 border-primary-600 rounded-l-lg" onclick="showDashboardSection('overview')">
+                        <i class="fas fa-chart-line mr-3"></i>
+                        <span>Overview</span>
+                    </a>
+                    <a href="#" class="flex items-center px-4 py-3 text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-lg transition-colors" onclick="showDashboardSection('quizzes')">
+                        <i class="fas fa-question-circle mr-3"></i>
+                        <span>Quizzes</span>
+                    </a>
+                    <a href="#" class="flex items-center px-4 py-3 text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-lg transition-colors" onclick="showDashboardSection('lessons')">
+                        <i class="fas fa-calendar mr-3"></i>
+                        <span>My Lessons</span>
+                    </a>
+                    <a href="#" class="flex items-center px-4 py-3 text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-lg transition-colors" onclick="showDashboardSection('resources')">
+                        <i class="fas fa-book mr-3"></i>
+                        <span>Resources</span>
+                    </a>
+                    <a href="#" class="flex items-center px-4 py-3 text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-lg transition-colors" onclick="showDashboardSection('forum')">
+                        <i class="fas fa-comments mr-3"></i>
+                        <span>Forum</span>
+                    </a>
+                    <a href="#" class="flex items-center px-4 py-3 text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-lg transition-colors" onclick="showDashboardSection('profile')">
+                        <i class="fas fa-user mr-3"></i>
+                        <span>Profile</span>
+                    </a>
+                </div>
+                <div class="mt-8 px-4">
+                    <button class="w-full flex items-center px-4 py-3 text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-lg transition-colors" onclick="logout()">
+                        <i class="fas fa-sign-out-alt mr-3"></i>
+                        <span>Logout</span>
+                    </button>
+                </div>
+            </nav>
+        </div>
+        
+        <!-- Main Content -->
+        <div class="flex-1 overflow-x-hidden">
+            <!-- Header -->
+            <div class="bg-white shadow-sm border-b border-gray-200">
+                <div class="px-8 py-6">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <h1 class="text-2xl font-bold text-gray-900">Welcome back, <span data-bind="user.firstName">Sarah</span>!</h1>
+                            <p class="text-gray-600">Continue your grammar learning journey</p>
+                        </div>
+                        <div class="flex items-center space-x-4">
+                            <button class="p-2 text-gray-600 hover:text-primary-600 transition-colors relative">
+                                <i class="fas fa-bell text-lg"></i>
+                                <span class="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full"></span>
+                            </button>
+                            <div class="w-8 h-8 bg-primary-600 rounded-full flex items-center justify-center text-white font-semibold">
+                                S
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Dashboard Overview Content -->
+            <div id="overview-section" class="p-8">
+                <!-- Progress Overview -->
+                <div class="grid lg:grid-cols-4 gap-6 mb-8">
+                    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm text-gray-600 mb-1">Overall Progress</p>
+                                <p class="text-2xl font-bold text-gray-900">78%</p>
+                            </div>
+                            <div class="w-12 h-12 bg-primary-100 rounded-full flex items-center justify-center">
+                                <i class="fas fa-chart-line text-primary-600"></i>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm text-gray-600 mb-1">Quizzes Completed</p>
+                                <p class="text-2xl font-bold text-gray-900">24</p>
+                            </div>
+                            <div class="w-12 h-12 bg-success-100 rounded-full flex items-center justify-center">
+                                <i class="fas fa-check-circle text-success-600"></i>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm text-gray-600 mb-1">Current Streak</p>
+                                <p class="text-2xl font-bold text-gray-900">12 days</p>
+                            </div>
+                            <div class="w-12 h-12 bg-warning-100 rounded-full flex items-center justify-center">
+                                <i class="fas fa-fire text-warning-600"></i>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm text-gray-600 mb-1">Next Lesson</p>
+                                <p class="text-lg font-semibold text-gray-900">Tomorrow</p>
+                                <p class="text-sm text-gray-600">2:00 PM</p>
+                            </div>
+                            <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
+                                <i class="fas fa-calendar text-blue-600"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Recent Activity & Recommendations -->
+                <div class="grid lg:grid-cols-2 gap-8">
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+                        <h3 class="text-lg font-semibold text-gray-900 mb-4">Recent Activity</h3>
+                        <div class="space-y-4">
+                            <div class="flex items-start">
+                                <div class="w-8 h-8 bg-success-100 rounded-full flex items-center justify-center mr-4 flex-shrink-0">
+                                    <i class="fas fa-check text-success-600 text-xs"></i>
+                                </div>
+                                <div>
+                                    <p class="text-sm font-medium text-gray-900">Completed "Advanced Tenses" quiz</p>
+                                    <p class="text-xs text-gray-600">Score: 92% • 2 hours ago</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="w-8 h-8 bg-primary-100 rounded-full flex items-center justify-center mr-4 flex-shrink-0">
+                                    <i class="fas fa-book text-primary-600 text-xs"></i>
+                                </div>
+                                <div>
+                                    <p class="text-sm font-medium text-gray-900">Studied "Conditional Sentences"</p>
+                                    <p class="text-xs text-gray-600">Yesterday</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="w-8 h-8 bg-warning-100 rounded-full flex items-center justify-center mr-4 flex-shrink-0">
+                                    <i class="fas fa-video text-warning-600 text-xs"></i>
+                                </div>
+                                <div>
+                                    <p class="text-sm font-medium text-gray-900">Attended live lesson</p>
+                                    <p class="text-xs text-gray-600">3 days ago</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+                        <h3 class="text-lg font-semibold text-gray-900 mb-4">Recommended for You</h3>
+                        <div class="space-y-4">
+                            <div class="p-4 bg-primary-50 rounded-lg border border-primary-200">
+                                <h4 class="font-medium text-gray-900 mb-2">Practice: Passive Voice</h4>
+                                <p class="text-sm text-gray-600 mb-3">Based on your recent quiz performance, you should review passive voice structures.</p>
+                                <button class="text-primary-600 text-sm font-medium hover:text-primary-700" onclick="startQuiz('passive-voice')">Start Practice →</button>
+                            </div>
+                            <div class="p-4 bg-success-50 rounded-lg border border-success-200">
+                                <h4 class="font-medium text-gray-900 mb-2">Article: Common Grammar Mistakes</h4>
+                                <p class="text-sm text-gray-600 mb-3">Learn about the most frequent errors and how to avoid them.</p>
+                                <button class="text-success-600 text-sm font-medium hover:text-success-700" onclick="openResource('common-mistakes')">Read Article →</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Quiz Section -->
+            <div id="quizzes-section" class="hidden p-8">
+                <div class="mb-8">
+                    <h2 class="text-2xl font-bold text-gray-900 mb-2">Interactive Quizzes</h2>
+                    <p class="text-gray-600">Test your grammar knowledge with our comprehensive quiz collection</p>
+                </div>
+                
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- @MAP: quizzes.map(quiz => ( -->
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 hover:shadow-md transition-shadow quiz-option">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="w-12 h-12 bg-primary-100 rounded-full flex items-center justify-center">
+                                <i class="fas fa-clock text-primary-600"></i>
+                            </div>
+                            <span class="text-sm bg-success-100 text-success-600 px-2 py-1 rounded-full font-medium">Beginner</span>
+                        </div>
+                        <h3 class="text-lg font-semibold text-gray-900 mb-2">Present Tenses</h3>
+                        <p class="text-gray-600 text-sm mb-4">Master the use of simple present, present continuous, and present perfect tenses.</p>
+                        <div class="flex items-center justify-between text-sm text-gray-600 mb-4">
+                            <span><i class="fas fa-question-circle mr-1"></i> 15 questions</span>
+                            <span><i class="fas fa-clock mr-1"></i> 10 min</span>
+                        </div>
+                        <button class="w-full bg-primary-600 text-white py-2 rounded-lg font-medium hover:bg-primary-700 transition-colors" onclick="startQuiz('present-tenses')">
+                            Start Quiz
+                        </button>
+                    </div>
+                    
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 hover:shadow-md transition-shadow quiz-option">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="w-12 h-12 bg-warning-100 rounded-full flex items-center justify-center">
+                                <i class="fas fa-brain text-warning-600"></i>
+                            </div>
+                            <span class="text-sm bg-warning-100 text-warning-600 px-2 py-1 rounded-full font-medium">Intermediate</span>
+                        </div>
+                        <h3 class="text-lg font-semibold text-gray-900 mb-2">Conditional Sentences</h3>
+                        <p class="text-gray-600 text-sm mb-4">Learn about zero, first, second, and third conditional structures.</p>
+                        <div class="flex items-center justify-between text-sm text-gray-600 mb-4">
+                            <span><i class="fas fa-question-circle mr-1"></i> 20 questions</span>
+                            <span><i class="fas fa-clock mr-1"></i> 15 min</span>
+                        </div>
+                        <button class="w-full bg-warning-600 text-white py-2 rounded-lg font-medium hover:bg-warning-700 transition-colors" onclick="startQuiz('conditionals')">
+                            Start Quiz
+                        </button>
+                    </div>
+                    
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 hover:shadow-md transition-shadow quiz-option">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center">
+                                <i class="fas fa-fire text-red-600"></i>
+                            </div>
+                            <span class="text-sm bg-red-100 text-red-600 px-2 py-1 rounded-full font-medium">Advanced</span>
+                        </div>
+                        <h3 class="text-lg font-semibold text-gray-900 mb-2">Advanced Grammar</h3>
+                        <p class="text-gray-600 text-sm mb-4">Challenge yourself with complex grammatical structures and rules.</p>
+                        <div class="flex items-center justify-between text-sm text-gray-600 mb-4">
+                            <span><i class="fas fa-question-circle mr-1"></i> 25 questions</span>
+                            <span><i class="fas fa-clock mr-1"></i> 20 min</span>
+                        </div>
+                        <button class="w-full bg-red-600 text-white py-2 rounded-lg font-medium hover:bg-red-700 transition-colors" onclick="startQuiz('advanced')">
+                            Start Quiz
+                        </button>
+                    </div>
+                    <!-- @END_MAP )) -->
+                </div>
+                
+                <!-- Quiz Results History -->
+                <div class="mt-12">
+                    <h3 class="text-xl font-semibold text-gray-900 mb-6">Recent Quiz Results</h3>
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+                        <div class="overflow-x-auto">
+                            <table class="w-full">
+                                <thead class="bg-gray-50 border-b border-gray-200">
+                                    <tr>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Quiz</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Score</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-gray-200">
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="text-sm font-medium text-gray-900">Present Tenses</div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-success-100 text-success-800">92%</span>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+                                            March 15, 2024
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm">
+                                            <button class="text-primary-600 hover:text-primary-500 font-medium">Review</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="text-sm font-medium text-gray-900">Articles</div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-warning-100 text-warning-800">76%</span>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+                                            March 12, 2024
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm">
+                                            <button class="text-primary-600 hover:text-primary-500 font-medium">Retake</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- @END_COMPONENT: Student Dashboard -->
+
+<!-- @COMPONENT: Quiz Interface [interactive quiz system] -->
+<div id="quiz-interface" class="hidden fixed inset-0 bg-gray-50 z-50">
+    <div class="min-h-screen flex flex-col">
+        <!-- Quiz Header -->
+        <div class="bg-white shadow-sm border-b border-gray-200">
+            <div class="max-w-4xl mx-auto px-4 py-4">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center">
+                        <button onclick="exitQuiz()" class="text-gray-600 hover:text-gray-900 mr-4">
+                            <i class="fas fa-times text-xl"></i>
+                        </button>
+                        <h1 class="text-xl font-semibold text-gray-900">Present Tenses Quiz</h1>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <div class="text-sm text-gray-600">
+                            Question <span id="current-question">1</span> of <span id="total-questions">15</span>
+                        </div>
+                        <div class="text-sm text-gray-600">
+                            <i class="fas fa-clock mr-1"></i>
+                            <span id="quiz-timer">09:45</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Progress Bar -->
+                <div class="mt-4">
+                    <div class="w-full bg-gray-200 rounded-full h-2">
+                        <div class="bg-primary-600 h-2 rounded-full transition-all duration-300" style="width: 7%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Quiz Content -->
+        <div class="flex-1 flex items-center justify-center p-4">
+            <div class="max-w-2xl w-full">
+                <div class="bg-white rounded-2xl shadow-lg p-8">
+                    <div class="mb-8">
+                        <h2 class="text-2xl font-semibold text-gray-900 mb-4">
+                            Choose the correct present tense form:
+                        </h2>
+                        <p class="text-lg text-gray-700 leading-relaxed">
+                            She _______ to work every morning at 8 AM.
+                        </p>
+                    </div>
+                    
+                    <div class="space-y-4">
+                        <label class="block cursor-pointer">
+                            <input type="radio" name="answer" value="a" class="sr-only">
+                            <div class="p-4 border-2 border-gray-200 rounded-lg hover:border-primary-300 hover:bg-primary-50 transition-colors quiz-option">
+                                <span class="font-medium text-gray-900">A) go</span>
+                            </div>
+                        </label>
+                        <label class="block cursor-pointer">
+                            <input type="radio" name="answer" value="b" class="sr-only">
+                            <div class="p-4 border-2 border-gray-200 rounded-lg hover:border-primary-300 hover:bg-primary-50 transition-colors quiz-option">
+                                <span class="font-medium text-gray-900">B) goes</span>
+                            </div>
+                        </label>
+                        <label class="block cursor-pointer">
+                            <input type="radio" name="answer" value="c" class="sr-only">
+                            <div class="p-4 border-2 border-gray-200 rounded-lg hover:border-primary-300 hover:bg-primary-50 transition-colors quiz-option">
+                                <span class="font-medium text-gray-900">C) going</span>
+                            </div>
+                        </label>
+                        <label class="block cursor-pointer">
+                            <input type="radio" name="answer" value="d" class="sr-only">
+                            <div class="p-4 border-2 border-gray-200 rounded-lg hover:border-primary-300 hover:bg-primary-50 transition-colors quiz-option">
+                                <span class="font-medium text-gray-900">D) went</span>
+                            </div>
+                        </label>
+                    </div>
+                    
+                    <div class="mt-8 flex justify-between">
+                        <button class="text-gray-600 hover:text-gray-900 font-medium" onclick="previousQuestion()">
+                            <i class="fas fa-arrow-left mr-2"></i>
+                            Previous
+                        </button>
+                        <button class="bg-primary-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-primary-700 transition-colors" onclick="nextQuestion()">
+                            Next Question
+                            <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- @END_COMPONENT: Quiz Interface -->
+
+<!-- @COMPONENT: Booking System [lesson scheduling] -->
+<div id="booking-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50 p-4">
+    <div class="bg-white rounded-2xl shadow-2xl w-full max-w-4xl mx-4 overflow-hidden max-h-[90vh] overflow-y-auto">
+        <div class="p-8">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-bold text-gray-900">Book a Lesson</h2>
+                <button onclick="hideBooking()" class="text-gray-400 hover:text-gray-600 transition-colors">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            
+            <div class="grid lg:grid-cols-2 gap-8">
+                <!-- Calendar -->
+                <div>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-4">Select Date & Time</h3>
+                    <div class="bg-gray-50 rounded-xl p-6">
+                        <!-- Calendar Header -->
+                        <div class="flex items-center justify-between mb-6">
+                            <h4 class="text-lg font-semibold text-gray-900">March 2024</h4>
+                            <div class="flex space-x-2">
+                                <button class="p-2 text-gray-600 hover:text-gray-900">
+                                    <i class="fas fa-chevron-left"></i>
+                                </button>
+                                <button class="p-2 text-gray-600 hover:text-gray-900">
+                                    <i class="fas fa-chevron-right"></i>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Calendar Grid -->
+                        <div class="grid grid-cols-7 gap-1 mb-4">
+                            <div class="text-center text-sm font-medium text-gray-600 py-2">Sun</div>
+                            <div class="text-center text-sm font-medium text-gray-600 py-2">Mon</div>
+                            <div class="text-center text-sm font-medium text-gray-600 py-2">Tue</div>
+                            <div class="text-center text-sm font-medium text-gray-600 py-2">Wed</div>
+                            <div class="text-center text-sm font-medium text-gray-600 py-2">Thu</div>
+                            <div class="text-center text-sm font-medium text-gray-600 py-2">Fri</div>
+                            <div class="text-center text-sm font-medium text-gray-600 py-2">Sat</div>
+                        </div>
+                        <div class="grid grid-cols-7 gap-1">
+                            <!-- Previous month days -->
+                            <button class="p-2 text-gray-400">26</button>
+                            <button class="p-2 text-gray-400">27</button>
+                            <button class="p-2 text-gray-400">28</button>
+                            <button class="p-2 text-gray-400">29</button>
+                            <!-- Current month days -->
+                            <button class="p-2 text-gray-900 hover:bg-primary-100 rounded">1</button>
+                            <button class="p-2 text-gray-900 hover:bg-primary-100 rounded">2</button>
+                            <button class="p-2 text-gray-900 hover:bg-primary-100 rounded">3</button>
+                            <button class="p-2 text-gray-900 hover:bg-primary-100 rounded">4</button>
+                            <button class="p-2 text-gray-900 hover:bg-primary-100 rounded">5</button>
+                            <button class="p-2 text-gray-900 hover:bg-primary-100 rounded">6</button>
+                            <button class="p-2 text-gray-900 hover:bg-primary-100 rounded">7</button>
+                            <button class="p-2 text-gray-900 hover:bg-primary-100 rounded">8</button>
+                            <button class="p-2 text-gray-900 hover:bg-primary-100 rounded">9</button>
+                            <button class="p-2 text-gray-900 hover:bg-primary-100 rounded">10</button>
+                            <button class="p-2 text-gray-900 hover:bg-primary-100 rounded">11</button>
+                            <button class="p-2 text-gray-900 hover:bg-primary-100 rounded">12</button>
+                            <button class="p-2 text-gray-900 hover:bg-primary-100 rounded">13</button>
+                            <button class="p-2 text-gray-900 hover:bg-primary-100 rounded">14</button>
+                            <button class="p-2 bg-primary-600 text-white rounded">15</button>
+                            <button class="p-2 text-gray-900 hover:bg-primary-100 rounded">16</button>
+                            <button class="p-2 text-gray-900 hover:bg-primary-100 rounded">17</button>
+                            <button class="p-2 text-gray-900 hover:bg-primary-100 rounded">18</button>
+                            <button class="p-2 text-gray-900 hover:bg-primary-100 rounded">19</button>
+                            <button class="p-2 text-gray-900 hover:bg-primary-100 rounded">20</button>
+                            <button class="p-2 text-gray-900 hover:bg-primary-100 rounded">21</button>
+                            <button class="p-2 text-gray-900 hover:bg-primary-100 rounded">22</button>
+                            <button class="p-2 text-gray-900 hover:bg-primary-100 rounded">23</button>
+                            <button class="p-2 text-gray-900 hover:bg-primary-100 rounded">24</button>
+                            <button class="p-2 text-gray-900 hover:bg-primary-100 rounded">25</button>
+                            <button class="p-2 text-gray-900 hover:bg-primary-100 rounded">26</button>
+                            <button class="p-2 text-gray-900 hover:bg-primary-100 rounded">27</button>
+                            <button class="p-2 text-gray-900 hover:bg-primary-100 rounded">28</button>
+                            <button class="p-2 text-gray-900 hover:bg-primary-100 rounded">29</button>
+                            <button class="p-2 text-gray-900 hover:bg-primary-100 rounded">30</button>
+                            <button class="p-2 text-gray-900 hover:bg-primary-100 rounded">31</button>
+                        </div>
+                        
+                        <!-- Available Time Slots -->
+                        <div class="mt-6">
+                            <h5 class="text-sm font-medium text-gray-900 mb-3">Available Times (March 15)</h5>
+                            <div class="grid grid-cols-3 gap-2">
+                                <button class="p-2 text-sm border border-gray-300 rounded hover:border-primary-600 hover:bg-primary-50 transition-colors">9:00 AM</button>
+                                <button class="p-2 text-sm border border-gray-300 rounded hover:border-primary-600 hover:bg-primary-50 transition-colors">10:30 AM</button>
+                                <button class="p-2 text-sm border border-gray-300 rounded hover:border-primary-600 hover:bg-primary-50 transition-colors">2:00 PM</button>
+                                <button class="p-2 text-sm bg-primary-600 text-white rounded">3:30 PM</button>
+                                <button class="p-2 text-sm border border-gray-300 rounded hover:border-primary-600 hover:bg-primary-50 transition-colors">5:00 PM</button>
+                                <button class="p-2 text-sm text-gray-400 border border-gray-200 rounded cursor-not-allowed">7:00 PM</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Booking Details -->
+                <div>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-4">Lesson Details</h3>
+                    <div class="space-y-6">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Lesson Type</label>
+                            <select class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent">
+                                <option>Private Lesson (1-on-1)</option>
+                                <option>Group Lesson (2-6 students)</option>
+                                <option>Intensive Session</option>
+                            </select>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Focus Area</label>
+                            <select class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent">
+                                <option>General Grammar</option>
+                                <option>Tenses</option>
+                                <option>Articles</option>
+                                <option>Conditionals</option>
+                                <option>Passive Voice</option>
+                                <option>Other (specify in notes)</option>
+                            </select>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Special Notes</label>
+                            <textarea class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent resize-none" rows="3" placeholder="Any specific topics you'd like to focus on or questions you have..." data-mock="true"></textarea>
+                        </div>
+                        
+                        <!-- Booking Summary -->
+                        <div class="bg-gray-50 rounded-lg p-6">
+                            <h4 class="font-semibold text-gray-900 mb-4">Booking Summary</h4>
+                            <div class="space-y-2 text-sm">
+                                <div class="flex justify-between">
+                                    <span class="text-gray-600">Date:</span>
+                                    <span class="font-medium">March 15, 2024</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-600">Time:</span>
+                                    <span class="font-medium">3:30 PM - 4:30 PM</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-600">Duration:</span>
+                                    <span class="font-medium">60 minutes</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-600">Type:</span>
+                                    <span class="font-medium">Private Lesson</span>
+                                </div>
+                                <div class="flex justify-between border-t border-gray-200 pt-2 mt-3">
+                                    <span class="font-semibold">Total:</span>
+                                    <span class="font-bold text-primary-600">$45.00</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <button class="w-full bg-primary-600 text-white py-3 rounded-lg font-semibold hover:bg-primary-700 transition-colors" onclick="confirmBooking()">
+                            Confirm Booking
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- @END_COMPONENT: Booking System -->
+
+<!-- @COMPONENT: Resources Page [educational materials] -->
+<section id="resources" class="py-20 bg-white hidden">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
+                Grammar Learning Resources
+            </h2>
+            <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                Access our comprehensive collection of grammar guides, exercises, and reference materials.
+            </p>
+        </div>
+        
+        <!-- Resource Categories -->
+        <div class="flex flex-wrap justify-center gap-4 mb-12">
+            <button class="px-6 py-3 bg-primary-600 text-white rounded-lg font-medium hover:bg-primary-700 transition-colors">All Resources</button>
+            <button class="px-6 py-3 border border-gray-300 text-gray-700 rounded-lg font-medium hover:bg-gray-50 transition-colors">Grammar Guides</button>
+            <button class="px-6 py-3 border border-gray-300 text-gray-700 rounded-lg font-medium hover:bg-gray-50 transition-colors">Worksheets</button>
+            <button class="px-6 py-3 border border-gray-300 text-gray-700 rounded-lg font-medium hover:bg-gray-50 transition-colors">Video Lessons</button>
+            <button class="px-6 py-3 border border-gray-300 text-gray-700 rounded-lg font-medium hover:bg-gray-50 transition-colors">Practice Exercises</button>
+        </div>
+        
+        <!-- Resources Grid -->
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Grammar Guide -->
+            <div class="bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden hover:shadow-xl transition-shadow">
+                <!-- English grammar textbook with exercises -->
+                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=400" 
+                     alt="Comprehensive English grammar textbook" 
+                     class="w-full h-48 object-cover">
+                <div class="p-6">
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="bg-primary-100 text-primary-600 text-xs font-medium px-2 py-1 rounded-full">Grammar Guide</span>
+                        <span class="text-success-600 font-medium text-sm">Free</span>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-2">Complete Tenses Guide</h3>
+                    <p class="text-gray-600 text-sm mb-4">Comprehensive guide covering all English tenses with examples and usage rules.</p>
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center text-sm text-gray-600">
+                            <i class="fas fa-file-pdf mr-2"></i>
+                            <span>24 pages</span>
+                        </div>
+                        <button class="bg-primary-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-primary-700 transition-colors">
+                            Download
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Video Lesson -->
+            <div class="bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden hover:shadow-xl transition-shadow">
+                <!-- Video lesson thumbnail showing teacher explaining grammar -->
+                <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=400" 
+                     alt="Teacher explaining grammar concepts in video lesson" 
+                     class="w-full h-48 object-cover">
+                <div class="p-6">
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="bg-warning-100 text-warning-600 text-xs font-medium px-2 py-1 rounded-full">Video Lesson</span>
+                        <span class="text-primary-600 font-medium text-sm">Premium</span>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-2">Mastering Conditionals</h3>
+                    <p class="text-gray-600 text-sm mb-4">Step-by-step video explanation of all conditional sentence types with practical examples.</p>
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center text-sm text-gray-600">
+                            <i class="fas fa-play-circle mr-2"></i>
+                            <span>45 minutes</span>
+                        </div>
+                        <button class="bg-warning-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-warning-700 transition-colors">
+                            Watch
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Worksheet -->
+            <div class="bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden hover:shadow-xl transition-shadow">
+                <!-- Grammar worksheets and practice exercises -->
+                <img src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=400" 
+                     alt="Grammar worksheets and practice exercises" 
+                     class="w-full h-48 object-cover">
+                <div class="p-6">
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="bg-success-100 text-success-600 text-xs font-medium px-2 py-1 rounded-full">Worksheet</span>
+                        <span class="text-success-600 font-medium text-sm">Free</span>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-2">Article Usage Practice</h3>
+                    <p class="text-gray-600 text-sm mb-4">Practice exercises for mastering the correct usage of articles (a, an, the).</p>
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center text-sm text-gray-600">
+                            <i class="fas fa-edit mr-2"></i>
+                            <span>50 exercises</span>
+                        </div>
+                        <button class="bg-success-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-success-700 transition-colors">
+                            Download
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- @END_COMPONENT: Resources Page -->
+
+<!-- @COMPONENT: Contact Form [inquiry form] -->
+<section id="contact" class="py-20 bg-gray-50 hidden">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="lg:grid lg:grid-cols-12 lg:gap-12">
+            <div class="lg:col-span-5 mb-12 lg:mb-0">
+                <h2 class="text-3xl lg:text-4xl font-bold text-gray-900 mb-6">
+                    Get in Touch
+                </h2>
+                <p class="text-xl text-gray-600 mb-8">
+                    Have questions about our grammar courses? Ready to start your learning journey? Contact us today!
+                </p>
+                
+                <div class="space-y-6">
+                    <div class="flex items-start">
+                        <div class="w-12 h-12 bg-primary-100 rounded-full flex items-center justify-center mr-4 flex-shrink-0">
+                            <i class="fas fa-envelope text-primary-600"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-semibold text-gray-900 mb-1">Email Us</h3>
+                            <p class="text-gray-600">hello@grammarmaster.com</p>
+                            <p class="text-gray-600">Response within 24 hours</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-start">
+                        <div class="w-12 h-12 bg-success-100 rounded-full flex items-center justify-center mr-4 flex-shrink-0">
+                            <i class="fas fa-phone text-success-600"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-semibold text-gray-900 mb-1">Call Us</h3>
+                            <p class="text-gray-600">+1 (555) 123-4567</p>
+                            <p class="text-gray-600">Mon-Fri, 9am-6pm EST</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-start">
+                        <div class="w-12 h-12 bg-warning-100 rounded-full flex items-center justify-center mr-4 flex-shrink-0">
+                            <i class="fas fa-comments text-warning-600"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-semibold text-gray-900 mb-1">Live Chat</h3>
+                            <p class="text-gray-600">Available on our platform</p>
+                            <p class="text-gray-600">Instant support for students</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="lg:col-span-7">
+                <div class="bg-white rounded-2xl shadow-lg p-8">
+                    <form class="space-y-6">
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">First Name</label>
+                                <input type="text" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors" placeholder="John" data-mock="true">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Last Name</label>
+                                <input type="text" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors" placeholder="Doe" data-mock="true">
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
+                            <input type="email" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors" placeholder="your@email.com" data-mock="true">
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Subject</label>
+                            <select class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors">
+                                <option>General Inquiry</option>
+                                <option>Course Information</option>
+                                <option>Technical Support</option>
+                                <option>Billing Question</option>
+                                <option>Partnership Opportunity</option>
+                            </select>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Message</label>
+                            <textarea class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent resize-none" rows="5" placeholder="Tell us how we can help you..." data-mock="true"></textarea>
+                        </div>
+                        
+                        <button type="submit" class="w-full bg-primary-600 text-white py-3 rounded-lg font-semibold hover:bg-primary-700 transition-colors">
+                            Send Message
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- @END_COMPONENT: Contact Form -->
+
+<!-- @COMPONENT: Footer [site footer with links] -->
+<footer class="bg-gray-900 text-white py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid md:grid-cols-4 gap-8">
+            <div class="md:col-span-2">
+                <div class="flex items-center mb-6">
+                    <i class="fas fa-graduation-cap text-primary-400 text-2xl mr-3"></i>
+                    <span class="text-xl font-bold">Grammar Master</span>
+                </div>
+                <p class="text-gray-400 mb-6 leading-relaxed">
+                    Empowering students to master English grammar through expert instruction, interactive learning, and personalized feedback. Join our community of successful learners today.
+                </p>
+                <div class="flex space-x-4">
+                    <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-primary-600 transition-colors">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-primary-600 transition-colors">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-primary-600 transition-colors">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                    <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-primary-600 transition-colors">
+                        <i class="fab fa-youtube"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <div>
+                <h3 class="text-lg font-semibold mb-6">Quick Links</h3>
+                <ul class="space-y-3">
+                    <li><a href="#home" class="text-gray-400 hover:text-white transition-colors">Home</a></li>
+                    <li><a href="#about" class="text-gray-400 hover:text-white transition-colors">About</a></li>
+                    <li><a href="#services" class="text-gray-400 hover:text-white transition-colors">Services</a></li>
+                    <li><a href="#resources" class="text-gray-400 hover:text-white transition-colors">Resources</a></li>
+                    <li><a href="#contact" class="text-gray-400 hover:text-white transition-colors">Contact</a></li>
+                </ul>
+            </div>
+            
+            <div>
+                <h3 class="text-lg font-semibold mb-6">Support</h3>
+                <ul class="space-y-3">
+                    <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Help Center</a></li>
+                    <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Privacy Policy</a></li>
+                    <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Terms of Service</a></li>
+                    <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Cookie Policy</a></li>
+                    <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Accessibility</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="border-t border-gray-800 mt-12 pt-8">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-400 text-sm">
+                    © 2024 Grammar Master. All rights reserved.
+                </p>
+                <p class="text-gray-400 text-sm mt-4 md:mt-0">
+                    Built with ❤️ for English learners worldwide
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+<!-- @END_COMPONENT: Footer -->
+
+<script>
+// JavaScript for interactive functionality
+// TODO: Replace with proper React state management and backend integration
+
+(function() {
+    'use strict';
+    
+    // Global state management
+    let currentUser = null;
+    let currentView = 'home';
+    
+    // Navigation functions
+    window.toggleMobileMenu = function() {
+        const menu = document.getElementById('mobile-menu');
+        menu.classList.toggle('hidden');
+    };
+    
+    // Authentication functions
+    window.showLogin = function() {
+        document.getElementById('auth-modal').classList.remove('hidden');
+        document.getElementById('auth-modal').classList.add('flex');
+        document.getElementById('auth-title').textContent = 'Welcome Back';
+        document.getElementById('login-form').classList.remove('hidden');
+        document.getElementById('register-form').classList.add('hidden');
+    };
+    
+    window.showRegister = function() {
+        document.getElementById('auth-modal').classList.remove('hidden');
+        document.getElementById('auth-modal').classList.add('flex');
+        document.getElementById('auth-title').textContent = 'Create Account';
+        document.getElementById('login-form').classList.add('hidden');
+        document.getElementById('register-form').classList.remove('hidden');
+    };
+    
+    window.hideAuth = function() {
+        document.getElementById('auth-modal').classList.add('hidden');
+        document.getElementById('auth-modal').classList.remove('flex');
+    };
+    
+    window.switchToRegister = function() {
+        document.getElementById('auth-title').textContent = 'Create Account';
+        document.getElementById('login-form').classList.add('hidden');
+        document.getElementById('register-form').classList.remove('hidden');
+    };
+    
+    window.switchToLogin = function() {
+        document.getElementById('auth-title').textContent = 'Welcome Back';
+        document.getElementById('login-form').classList.remove('hidden');
+        document.getElementById('register-form').classList.add('hidden');
+    };
+    
+    window.authenticateUser = function() {
+        // TODO: Implement actual authentication
+        currentUser = { name: 'Sarah', role: 'student' };
+        hideAuth();
+        showDashboard('student');
+        console.log('User authenticated:', currentUser);
+    };
+    
+    window.registerUser = function() {
+        // TODO: Implement actual registration
+        currentUser = { name: 'New User', role: 'student' };
+        hideAuth();
+        showDashboard('student');
+        console.log('User registered:', currentUser);
+    };
+    
+    window.logout = function() {
+        currentUser = null;
+        showLandingPage();
+        console.log('User logged out');
+    };
+    
+    // Dashboard functions
+    window.showDashboard = function(role) {
+        // Hide all sections
+        document.querySelectorAll('section, #student-dashboard').forEach(el => {
+            el.classList.add('hidden');
+        });
+        
+        if (role === 'student') {
+            document.getElementById('student-dashboard').classList.remove('hidden');
+            currentView = 'dashboard';
+        }
+    };
+    
+    window.showLandingPage = function() {
+        document.getElementById('student-dashboard').classList.add('hidden');
+        document.querySelectorAll('section').forEach(el => {
+            el.classList.remove('hidden');
+        });
+        currentView = 'home';
+    };
+    
+    window.showDashboardSection = function(section) {
+        // Hide all dashboard sections
+        document.querySelectorAll('[id$="-section"]').forEach(el => {
+            el.classList.add('hidden');
+        });
+        
+        // Show selected section
+        document.getElementById(section + '-section').classList.remove('hidden');
+        
+        // Update navigation active state
+        document.querySelectorAll('nav a').forEach(link => {
+            link.classList.remove('text-gray-900', 'bg-primary-50', 'border-r-2', 'border-primary-600');
+            link.classList.add('text-gray-600');
+        });
+        
+        // Set active nav item (simplified)
+        console.log('Showing dashboard section:', section);
+    };
+    
+    // Quiz functions
+    window.startQuiz = function(quizType) {
+        document.getElementById('quiz-interface').classList.remove('hidden');
+        console.log('Starting quiz:', quizType);
+        // TODO: Load quiz questions from backend
+    };
+    
+    window.exitQuiz = function() {
+        document.getElementById('quiz-interface').classList.add('hidden');
+    };
+    
+    window.nextQuestion = function() {
+        // TODO: Implement quiz navigation
+        console.log('Next question');
+    };
+    
+    window.previousQuestion = function() {
+        // TODO: Implement quiz navigation
+        console.log('Previous question');
+    };
+    
+    // Booking functions
+    window.showBooking = function() {
+        document.getElementById('booking-modal').classList.remove('hidden');
+        document.getElementById('booking-modal').classList.add('flex');
+    };
+    
+    window.hideBooking = function() {
+        document.getElementById('booking-modal').classList.add('hidden');
+        document.getElementById('booking-modal').classList.remove('flex');
+    };
+    
+    window.confirmBooking = function() {
+        // TODO: Implement booking confirmation
+        console.log('Booking confirmed');
+        hideBooking();
+        alert('Booking confirmed! You will receive a confirmation email shortly.');
+    };
+    
+    // Section navigation
+    window.showContact = function() {
+        document.querySelectorAll('section').forEach(section => {
+            section.classList.add('hidden');
+        });
+        document.getElementById('contact').classList.remove('hidden');
+    };
+    
+    // Resource functions
+    window.openResource = function(resourceId) {
+        console.log('Opening resource:', resourceId);
+        // TODO: Implement resource viewing
+    };
+    
+    // Initialize smooth scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
+    });
+    
+    // Initialize quiz option interactions
+    document.addEventListener('click', function(e) {
+        if (e.target.closest('.quiz-option')) {
+            const option = e.target.closest('.quiz-option');
+            const parent = option.closest('.space-y-4');
+            if (parent) {
+                parent.querySelectorAll('.quiz-option').forEach(opt => {
+                    opt.classList.remove('border-primary-600', 'bg-primary-50');
+                    opt.classList.add('border-gray-200');
+                });
+                option.classList.remove('border-gray-200');
+                option.classList.add('border-primary-600', 'bg-primary-50');
+            }
+        }
+    });
+    
+    // Simulate quiz timer
+    let quizTimeRemaining = 585; // 9:45 in seconds
+    setInterval(function() {
+        if (document.getElementById('quiz-interface').classList.contains('hidden')) return;
+        
+        const minutes = Math.floor(quizTimeRemaining / 60);
+        const seconds = quizTimeRemaining % 60;
+        const timerElement = document.getElementById('quiz-timer');
+        if (timerElement) {
+            timerElement.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+        
+        if (quizTimeRemaining > 0) {
+            quizTimeRemaining--;
+        }
+    }, 1000);
+    
+    console.log('Grammar Master platform initialized');
+})();
+</script>
+
+</body>
+</html>
