@@ -181,6 +181,20 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Forum routes  
+  app.post("/api/forum", authenticateToken, async (req: any, res) => {
+    try {
+      const postData = {
+        ...req.body,
+        userId: req.user.id,
+      };
+      const post = await storage.createForumPost(postData);
+      res.json(post);
+    } catch (error: any) {
+      res.status(400).json({ message: error.message });
+    }
+  });
+
   // Contact routes
   app.post("/api/contact", async (req, res) => {
     try {

@@ -4,6 +4,7 @@ import { useAuth } from "@/lib/auth";
 import { Link } from "wouter";
 import { BookingModal } from "@/components/booking-modal";
 import { QuizInterface } from "@/components/quiz-interface";
+import { ForumPostModal } from "@/components/forum-post-modal";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -30,6 +31,7 @@ export default function Dashboard() {
   const { user, logout } = useAuth();
   const [bookingModalOpen, setBookingModalOpen] = useState(false);
   const [selectedQuizId, setSelectedQuizId] = useState<string | null>(null);
+  const [forumPostModalOpen, setForumPostModalOpen] = useState(false);
   const queryClient = useQueryClient();
 
   const { data: quizzes } = useQuery({
@@ -534,7 +536,20 @@ export default function Dashboard() {
                               <span>{Math.round(resource.fileSize / 1024 / 1024)} MB</span>
                             )}
                           </div>
-                          <Button size="sm" data-testid={`resource-${resource.id}`}>
+                          <Button 
+                            size="sm" 
+                            data-testid={`resource-${resource.id}`}
+                            onClick={() => {
+                              if (resource.type === 'video') {
+                                window.open(resource.url, '_blank');
+                              } else {
+                                const link = document.createElement('a');
+                                link.href = resource.url;
+                                link.download = resource.title;
+                                link.click();
+                              }
+                            }}
+                          >
                             <Download className="h-4 w-4 mr-2" />
                             {resource.type === 'video' ? 'Watch' : 'Download'}
                           </Button>
@@ -548,7 +563,7 @@ export default function Dashboard() {
               <TabsContent value="forum" className="space-y-6">
                 <div className="flex justify-between items-center">
                   <h2 className="text-2xl font-bold text-foreground">Discussion Forum</h2>
-                  <Button data-testid="new-post">New Post</Button>
+                  <Button onClick={() => setForumPostModalOpen(true)} data-testid="new-post">New Post</Button>
                 </div>
 
                 {forumPosts && forumPosts.length > 0 ? (
@@ -581,7 +596,7 @@ export default function Dashboard() {
                       <p className="text-muted-foreground text-center mb-4">
                         Start a discussion to connect with other students
                       </p>
-                      <Button data-testid="create-first-post">Create First Post</Button>
+                      <Button onClick={() => setForumPostModalOpen(true)} data-testid="create-first-post">Create First Post</Button>
                     </CardContent>
                   </Card>
                 )}
@@ -595,6 +610,11 @@ export default function Dashboard() {
       <BookingModal 
         isOpen={bookingModalOpen} 
         onClose={() => setBookingModalOpen(false)} 
+      />
+      
+      <ForumPostModal
+        isOpen={forumPostModalOpen}
+        onClose={() => setForumPostModalOpen(false)}
       />
       
       {selectedQuizId && (

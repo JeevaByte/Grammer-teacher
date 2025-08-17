@@ -511,6 +511,44 @@ export class PostgreSQLStorage implements IStorage {
         ];
 
         await this.db.insert(resources).values(sampleResources);
+
+        // Create sample forum posts
+        const sampleForumPosts = [
+          {
+            id: randomUUID(),
+            userId: teacherId,
+            title: "Welcome to Grammar Master Forum!",
+            content: "Hello everyone! Welcome to our community forum. Here you can ask questions, share tips, and connect with fellow grammar learners. Feel free to introduce yourself and let us know what areas of grammar you'd like to focus on.",
+            category: "general",
+            replies: 5,
+          },
+          {
+            id: randomUUID(),
+            userId: teacherId,
+            title: "Tips for Mastering Present Perfect Tense",
+            content: "The present perfect tense can be tricky for many students. Here are some key tips: 1) Use it for actions that started in the past and continue to the present, 2) Use it for past actions with present relevance, 3) Common time expressions include 'since', 'for', 'already', 'yet'. What questions do you have about present perfect?",
+            category: "grammar-tips",
+            replies: 12,
+          },
+          {
+            id: randomUUID(),
+            userId: teacherId,
+            title: "Common Grammar Mistakes to Avoid",
+            content: "Let's discuss the most common grammar mistakes I see in student writing: 1) Confusing 'its' and 'it's', 2) Subject-verb disagreement, 3) Misusing apostrophes, 4) Run-on sentences. Share your own experiences with these challenges!",
+            category: "study-help",
+            replies: 8,
+          },
+          {
+            id: randomUUID(),
+            userId: teacherId,
+            title: "Study Group Formation",
+            content: "I'm organizing study groups for different proficiency levels. If you're interested in joining a group to practice grammar together, please reply with your current level (beginner, intermediate, advanced) and your preferred meeting times.",
+            category: "study-group",
+            replies: 15,
+          }
+        ];
+
+        await this.db.insert(forumPosts).values(sampleForumPosts);
       }
     } catch (error) {
       console.error("Error seeding data:", error);

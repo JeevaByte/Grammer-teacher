@@ -717,44 +717,29 @@ export default function HomePage() {
               <h3 className="text-lg font-semibold text-foreground mb-6">Support</h3>
               <ul className="space-y-3">
                 <li>
-                  <a
-                    href="#"
-                    className="text-muted-foreground hover:text-foreground transition-colors"
-                  >
+                  <Link href="/support" className="text-muted-foreground hover:text-foreground transition-colors">
                     Help Center
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a
-                    href="#"
-                    className="text-muted-foreground hover:text-foreground transition-colors"
-                  >
+                  <Link href="/support" className="text-muted-foreground hover:text-foreground transition-colors">
                     Privacy Policy
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a
-                    href="#"
-                    className="text-muted-foreground hover:text-foreground transition-colors"
-                  >
+                  <Link href="/support" className="text-muted-foreground hover:text-foreground transition-colors">
                     Terms of Service
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a
-                    href="#"
-                    className="text-muted-foreground hover:text-foreground transition-colors"
-                  >
+                  <Link href="/support" className="text-muted-foreground hover:text-foreground transition-colors">
                     Cookie Policy
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a
-                    href="#"
-                    className="text-muted-foreground hover:text-foreground transition-colors"
-                  >
+                  <Link href="/support" className="text-muted-foreground hover:text-foreground transition-colors">
                     Accessibility
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </div>

@@ -11,6 +11,7 @@ import Dashboard from "@/pages/dashboard";
 import QuizPage from "@/pages/quiz";
 import LoginPage from "@/pages/login";
 import RegisterPage from "@/pages/register";
+import SupportPage from "@/pages/support";
 import NotFound from "@/pages/not-found";
 
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
@@ -29,6 +30,7 @@ function Router() {
       <Route path="/" component={HomePage} />
       <Route path="/login" component={LoginPage} />
       <Route path="/register" component={RegisterPage} />
+      <Route path="/support" component={SupportPage} />
       <Route path="/dashboard">
         <ProtectedRoute>
           <Dashboard />

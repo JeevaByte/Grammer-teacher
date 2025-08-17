@@ -15,6 +15,17 @@ interface Question {
   explanation: string;
 }
 
+interface Quiz {
+  id: string;
+  title: string;
+  description: string;
+  difficulty: string;
+  category: string;
+  questions: Question[];
+  timeLimit: number;
+  createdAt: string;
+}
+
 interface QuizInterfaceProps {
   quizId: string;
   isOpen: boolean;
@@ -29,7 +40,7 @@ export function QuizInterface({ quizId, isOpen, onClose }: QuizInterfaceProps) {
   const { getAuthHeaders } = useAuth();
   const { toast } = useToast();
 
-  const { data: quiz, isLoading } = useQuery({
+  const { data: quiz, isLoading } = useQuery<Quiz>({
     queryKey: ["/api/quizzes", quizId],
     enabled: isOpen && !!quizId,
   });
@@ -48,7 +59,7 @@ export function QuizInterface({ quizId, isOpen, onClose }: QuizInterfaceProps) {
         })),
       };
 
-      const response = await apiRequest("POST", "/api/quiz-results", quizData, getAuthHeaders());
+      const response = await apiRequest("POST", "/api/quiz-results", quizData);
       return response.json();
     },
     onSuccess: (result) => {
@@ -225,7 +236,7 @@ export function QuizInterface({ quizId, isOpen, onClose }: QuizInterfaceProps) {
               </div>
 
               <div className="space-y-4">
-                {currentQ.options.map((option, index) => (
+                {currentQ.options.map((option: string, index: number) => (
                   <label key={index} className="block cursor-pointer">
                     <input
                       type="radio"
