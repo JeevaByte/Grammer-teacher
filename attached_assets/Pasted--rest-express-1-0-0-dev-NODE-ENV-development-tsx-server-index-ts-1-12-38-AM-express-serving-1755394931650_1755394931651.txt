@@ -1,0 +1,29 @@
+> rest-express@1.0.0 dev
+> NODE_ENV=development tsx server/index.ts
+
+1:12:38 AM [express] serving on port 5000
+Browserslist: browsers data (caniuse-lite) is 10 months old. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+1:13:17 AM [express] GET /api/resources 200 in 2ms :: [{"id":"dea91e01-6031-47b5-8b6d-8a7212be01ad",…
+1:17:41 AM [express] GET /api/resources 200 in 0ms :: [{"id":"dea91e01-6031-47b5-8b6d-8a7212be01ad",…
+1:23:27 AM [express] GET /api/resources 200 in 1ms :: [{"id":"dea91e01-6031-47b5-8b6d-8a7212be01ad",…
+1:24:16 AM [express] POST /api/auth/register 200 in 94ms :: {"user":{"username":"arunsriram","email"…
+1:24:21 AM [express] GET /api/quizzes 200 in 1ms :: [{"id":"bb07bec9-b0a4-46ab-bbcf-d66df52adfca","t…
+1:24:21 AM [express] GET /api/forum 200 in 1ms :: []
+1:24:21 AM [express] GET /api/quiz-results 401 in 1ms :: {"message":"Access token required"}
+1:24:21 AM [express] GET /api/lessons 401 in 0ms :: {"message":"Access token required"}
+1:25:58 AM [express] GET /api/quizzes/bb07bec9-b0a4-46ab-bbcf-d66df52adfca 200 in 0ms :: {"id":"bb07…
+1:26:02 AM [express] POST /api/quiz-results 401 in 1ms :: {"message":"Access token required"}
+1:26:04 AM [express] POST /api/quiz-results 401 in 0ms :: {"message":"Access token required"}
+1:26:17 AM [express] POST /api/quiz-results 401 in 0ms :: {"message":"Access token required"}
+1:26:26 AM [express] POST /api/quiz-results 401 in 0ms :: {"message":"Access token required"}
+1:26:30 AM [express] GET /api/quizzes/4f01f96c-3863-43f5-9c92-29b80faab524 200 in 0ms :: {"id":"4f01…
+1:26:32 AM [express] POST /api/quiz-results 401 in 0ms :: {"message":"Access token required"}
+1:26:34 AM [express] POST /api/quiz-results 401 in 1ms :: {"message":"Access token required"}
+1:27:19 AM [express] POST /api/quiz-results 401 in 1ms :: {"message":"Access token required"}
+1:27:27 AM [express] GET /api/quizzes/75cc8046-a447-496a-85f2-0d6db6ca8b8e 200 in 0ms :: {"id":"75cc…
+1:27:29 AM [express] POST /api/quiz-results 401 in 1ms :: {"message":"Access token required"}
+1:27:42 AM [express] POST /api/lessons 401 in 0ms :: {"message":"Access token required"}
+1:32:35 AM [express] GET /api/quiz-results 401 in 0ms :: {"message":"Access token required"}
+1:32:35 AM [express] GET /api/lessons 401 in 1ms :: {"message":"Access token required"}
